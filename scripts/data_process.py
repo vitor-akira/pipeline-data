@@ -2,40 +2,36 @@ import json
 import csv
 
 class Data:
-    def __init__(self, path, data_type):
-        self.path = path
-        self.data_type = data_type
-        self.data = self.read_data()
-        self.column_name = self.get_columns()
-        self.len_lines = self.size_data()
+    def __init__(self, data):
+        self.data = data
+        self.column_name = self.__get_columns()
+        self.len_lines = self.__size_data()
 
-    def read_json(self):
+    def __read_json(path):
         data_json = []
-        with open(self.path, 'r') as file:
+        with open(path, 'r') as file:
             data_json = json.load(file)
         return data_json
 
-    def read_csv(self):
+    def __read_csv(path):
         data_csv = []
-        with open(self.path, 'r') as file:
+        with open(path, 'r') as file:
             spamreader = (csv.DictReader(file, delimiter=',')) 
             for row in spamreader:
                 data_csv.append(row) 
         return data_csv
 
-    def read_data(self):
+    @classmethod
+    def read_data(cls, path, data_type):
         data = []
-        if self.data_type == 'csv':
-            data = self.read_csv()
-        elif self.data_type == 'json':
-            data = self.read_json()
-        elif self.data_type == 'list':
-            data = self.path
-            self.path = 'list in memory'
+        if data_type == 'csv':
+            data = cls.__read_csv(path)
+        elif data_type == 'json':
+            data = cls.__read_json(path)
         
-        return data
+        return cls(data)
     
-    def get_columns(self):
+    def __get_columns(self):
         return list(self.data[-1].keys())
     
     def rename_columns(self, key_mapping):
@@ -46,9 +42,9 @@ class Data:
                 dict_temp[key_mapping[old_key]] = value
             new_data.append(dict_temp)
         self.data = new_data
-        self.column_name = self.get_columns()
+        self.column_name = self.__get_columns()
 
-    def size_data(self):
+    def __size_data(self):
         return len(self.data)
     
     def join(dataA, dataB):
@@ -56,9 +52,9 @@ class Data:
         combined_list.extend(dataA.data)
         combined_list.extend(dataB.data)
 
-        return Data(combined_list, 'list')
+        return Data(combined_list)
     
-    def transform_data_chart(self):
+    def __transform_data_chart(self):
         combined_data_chart = [self.column_name]
 
         for row in self.data:
@@ -70,7 +66,7 @@ class Data:
         return combined_data_chart
     
     def save_data(self, path):
-        combined_data_chart = self.transform_data_chart()
+        combined_data_chart = self.__transform_data_chart()
         with open(path, 'w') as file:
             writer = csv.writer(file)
             writer.writerows(combined_data_chart)

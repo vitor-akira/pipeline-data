@@ -4,11 +4,11 @@ path_json = 'data_raw/dados_empresaA.json'
 path_csv = 'data_raw/dados_empresaB.csv'
 
 # extract
-data_A = Data(path_json, 'json')
+data_A = Data.read_data(path_json, 'json')
 print(f"Dados empresa A: {data_A.column_name}")
 print(f"Quantia de itens: {data_A.len_lines}")
 
-data_B = Data(path_csv, 'csv')
+data_B = Data.read_data(path_csv, 'csv')
 print(f"Dados empresa B: {data_B.column_name}")
 print(f"Quantia de itens: {data_B.len_lines}")
 
