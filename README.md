@@ -16,15 +16,15 @@ Este repositório contém um pipeline de processamento de dados, incluindo colet
 
 ### 1️⃣ Clonar o repositório
 ```bash
-git clone https://github.com/vitor-akira/pipeline-data.git
-cd pipeline-data
+git clone https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git
+cd SEU_REPOSITORIO
 ```
 
 ### 2️⃣ Criar um ambiente virtual (WSL/Linux)
 ```bash
-sudo apt install python3.12-venv  # Caso o venv não esteja disponível
-python3 -m venv venv
-source venv/bin/activate  # Ativar o ambiente virtual
+python -m venv venv
+source venv/bin/activate  
+venv\Scripts\activate
 ```
 
 ### 3️⃣ Instalar dependências
